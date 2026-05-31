@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700;900&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ==========================
+       COLORS — edit these!
+    ========================== */
+    :root {
+      --bg:       #0e0e0e;
+      --surface:  #1a1a1a;
+      --accent:   #f0e04a;   /* yellow highlight */
+      --text:     #f0ede6;
+      --muted:    #888;
+      --heading:  'Fraunces', serif;
+      --body:     'DM Sans', sans-serif;
+    }
+
+    /* ==========================
+       RESET
+    ========================== */
+    *, *::before, *::after {
+      margin: 0; padding: 0;
+      box-sizing: border-box;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--body);
+      line-height: 1.7;
+    }
+
+    /* ==========================
+       NAV
+    ========================== */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 48px;
+      background: rgba(14,14,14,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #222;
+    }
+
+    .logo {
+      font-family: var(--heading);
+      font-size: 1.5rem;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 32px;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    /* ==========================
+       HERO
+    ========================== */
+    .hero {
+      min-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 80px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* decorative circle */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -120px;
+      right: -120px;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(240,224,74,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      background: var(--accent);
+      color: #0e0e0e;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 2px;
+      margin-bottom: 28px;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .hero h1 {
+      font-family: var(--heading);
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      max-width: 780px;
+      margin-bottom: 28px;
+      animation: fadeUp 0.7s ease 0.1s both;
+    }
+
+    .hero h1 span { color: var(--accent); }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 44px;
+      animation: fadeUp 0.7s ease 0.2s both;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      animation: fadeUp 0.7s ease 0.3s both;
+    }
+
+    /* ==========================
+       BUTTONS
+    ========================== */
+    .btn-primary {
+      background: var(--accent);
+      color: #0e0e0e;
+      padding: 14px 36px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(240,224,74,0.3);
+    }
+
+    .btn-secondary {
+      border: 1px solid #333;
+      color: var(--text);
+      padding: 14px 36px;
+      border-radius: 4px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ==========================
+       FEATURES
+    ========================== */
+    .features {
+      padding: 100px 48px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: var(--heading);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 64px;
+      max-width: 500px;
+      line-height: 1.1;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 40px 32px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .card h3 {
+      font-family: var(--heading);
+      font-size: 1.25rem;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .card p {
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ==========================
+       ABOUT / CTA BAND
+    ========================== */
+    .cta-band {
+      margin: 0 48px 100px;
+      background: var(--accent);
+      border-radius: 16px;
+      padding: 80px 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .cta-band h2 {
+      font-family: var(--heading);
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      color: #0e0e0e;
+      max-width: 480px;
+      line-height: 1.1;
+    }
+
+    .btn-dark {
+      background: #0e0e0e;
+      color: var(--accent);
+      padding: 16px 40px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: opacity 0.2s;
+    }
+
+    .btn-dark:hover { opacity: 0.85; }
+
+    /* ==========================
+       FOOTER
+    ========================== */
+    footer {
+      border-top: 1px solid #1f1f1f;
+      padding: 32px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    footer p {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    footer a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+
+    footer a:hover { color: var(--accent); }
+
+    /* ==========================
+       ANIMATIONS
+    ========================== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ==========================
+       RESPONSIVE (mobile)
+    ========================== */
+    @media (max-width: 768px) {
+      nav          { padding: 16px 24px; }
+      .hero        { padding: 60px 24px; min-height: 80vh; }
+      .features    { padding: 60px 24px; }
+      .cards-grid  { grid-template-columns: 1fr; }
+      .cta-band    { margin: 0 24px 60px; padding: 48px 32px; flex-direction: column; text-align: center; }
+      footer       { padding: 24px; flex-direction: column; text-align: center; }
+      .nav-links   { display: none; } /* hide links on mobile for simplicity */
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ========== NAV ========== -->
+  <nav>
+    <a href="#" class="logo">✦ YourName</a>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero">
+    <span class="hero-tag">👋 Hello, World</span>
+    <h1>Build things you're <span>proud of.</span></h1>
+    <p>
+      This is your landing page. Replace this with a sentence that describes
+      you, your project, or your idea — in your own words.
+    </p>
+    <div class="hero-buttons">
+      <a href="#features" class="btn-primary">See What I Do</a>
+      <a href="#about"    class="btn-secondary">About Me</a>
+    </div>
+  </section>
+
+  <!-- ========== FEATURES ========== -->
+  <section class="features" id="features">
+    <p class="section-label">What I Offer</p>
+    <h2 class="section-title">Three things that make me different</h2>
+
+    <div class="cards-grid">
+
+      <div class="card">
+        <span class="card-icon">🚀</span>
+        <h3>First Strength</h3>
+        <p>Describe something you're good at, a skill you have, or a feature of your project. Keep it short and clear.</p>
+      </div>
+
+      <div class="card">
+        <span class="card-icon">🎨</span>
+        <h3>Second Strength</h3>
+        <p>What else sets you apart? Think about what problem you solve, or what value you bring to the table.</p>
+      </div>
+
+      <div class="card">
+        <span class="card-icon">💡</span>
+        <h3>Third Strength</h3>
+        <p>A third point that rounds out your story. End on something memorable or forward-looking.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== CTA BAND ========== -->
+  <div class="cta-band" id="about">
+    <h2>Want to work together or learn more?</h2>
+    <a href="mailto:you@email.com" class="btn-dark">Get In Touch →</a>
+  </div>
+
+  <!-- ========== FOOTER ========== -->
+  <footer>
+    <p>© 2026 YourName · Built with HTML & CSS</p>
+    <div style="display:flex; gap:24px;">
+      <a href="https://github.com/yourusername">GitHub</a>
+      <a href="#">Twitter</a>
+      <a href="#">LinkedIn</a>
+    </div>
+  </footer>
+
+</body>
+</html>
